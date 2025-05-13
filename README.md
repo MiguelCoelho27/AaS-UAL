@@ -56,11 +56,14 @@ python interface.py
 ```
 
 ## ☁️ Kubernetes (opcional)
-Descreve os serviços com ficheiros YAML prontos para deploy em cluster Kubernetes (pasta `Kubernetes/`).
+Descrever os serviços com ficheiros YAML prontos para deploy em cluster Kubernetes (pasta `Kubernetes/`).
 
 ---
 
 ## 👥 Autores
 
 - Miguel Coelho (30013673)
-- [Inserir os restantes colegas do grupo aqui]
+- a
+- b
+- c
+
