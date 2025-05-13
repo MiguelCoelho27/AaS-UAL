@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-tyckets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-tyckets
+  template:
+    metadata:
+      labels:
+        app: postgres-tyckets
+    spec:
+      containers:
+      - name: postgres-tyckets
+        image: postgres:15
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: admin
+        - name: POSTGRES_PASSWORD
+          value: admin123
+        - name: POSTGRES_DB
+          value: tycket_db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-tyckets
+spec:
+  selector:
+    app: postgres-tyckets
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP

@@ -1,0 +1,176 @@
+version: '3.8'
+
+services:
+  user-service:
+    build:
+      context: ./User
+    ports:
+      - "5003:5003"
+    networks:
+      - microservices-net
+    environment:
+      - DB_NAME=user_db
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+      - DB_HOST=postgres-users
+      - DB_PORT=5432
+    depends_on:
+      postgres-users:
+        condition: service_healthy
+
+  event-service:
+    build:
+      context: ./Events
+    ports:
+      - "5000:5000"
+    networks:
+      - microservices-net
+    environment:
+      - DB_NAME=event_db
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+      - DB_HOST=postgres-events
+      - DB_PORT=5432
+    depends_on:
+      postgres-events:
+        condition: service_healthy
+  
+  payment-service:
+    build:
+      context: ./Payments
+    ports:
+      - "5001:5001"
+    networks:
+      - microservices-net
+    environment:
+      - DB_NAME=payment_db
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+      - DB_HOST=postgres-payments
+      - DB_PORT=5432
+    depends_on:
+      postgres-payments:
+        condition: service_healthy
+  
+  tycket-service:
+    build:
+      context: ./Tyckets
+    ports:
+      - "5002:5002"
+    networks:
+      - microservices-net
+    environment:
+      - DB_NAME=tycket_db
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+      - DB_HOST=postgres-tyckets
+      - DB_PORT=5432
+    depends_on:
+      postgres-tyckets:
+        condition: service_healthy
+  
+  order-service:
+    build:
+      context: ./Orders
+    ports:
+      - "5004:5004"
+    networks:
+      - microservices-net
+    environment:
+      - DB_NAME=order_db
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+      - DB_HOST=postgres-orders
+      - DB_PORT=5432
+    depends_on:
+      postgres-orders:
+        condition: service_healthy
+
+  postgres-users:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: user_db
+    ports:
+      - "5434:5432"
+    networks:
+      - microservices-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d user_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-events:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: event_db
+    ports:
+      - "5430:5432"
+    networks:
+      - microservices-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d event_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  postgres-payments:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: payment_db
+    ports:
+      - "5428:5432"
+    networks:
+      - microservices-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d payment_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-tyckets:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: tycket_db
+    ports:
+      - "5426:5432"
+    networks:
+      - microservices-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d tycket_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-orders:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: order_db
+    ports:
+      - "5422:5432"
+    networks:
+      - microservices-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d order_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  microservices-net:
+    driver: bridge
