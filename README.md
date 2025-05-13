@@ -72,24 +72,24 @@ UALFlix/
 └── README.md
 ```
 
-☁️ Cloud & Cluster
+#☁️ Cloud & Cluster
 O sistema está preparado para ser distribuído por vários nós (ex: em Docker Swarm ou em VMs).
 Está planeada a simulação de um cluster com múltiplos nós e balanceamento de carga.
 Possível futura execução em ambiente cloud gratuito (como Render, Railway, ou máquina virtual na Azure).
 
-♻️ Estratégias de Replicação
+#♻️ Estratégias de Replicação
 A serem implementadas:
 Replicação síncrona/assíncrona dos dados dos vídeos e utilizadores
 Mecanismo de cache para vídeos mais visualizados
 Replicação dos serviços principais para alta disponibilidade (com failover)
 
-📊 Avaliação de Desempenho
+#📊 Avaliação de Desempenho
 Planned:
 Coleta de métricas de latência, throughput e uso de CPU/RAM
 Dashboard simples de monitorização (ex: com Flask ou Prometheus + Grafana)
 Testes de carga com locust ou ab (Apache Bench)
 
-📌 Funcionalidades por requisito (resumo)
+#📌 Funcionalidades por requisito (resumo)
 Requisito	Implementação prevista
 Sistemas distribuídos	Microserviços em Flask com REST API
 Cluster de computadores	Docker containers distribuídos
