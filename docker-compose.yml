@@ -52,21 +52,21 @@ services:
       postgres-payments:
         condition: service_healthy
   
-  tycket-service:
+  ticket-service:
     build:
-      context: ./Tyckets
+      context: ./Tickets
     ports:
       - "5002:5002"
     networks:
       - microservices-net
     environment:
-      - DB_NAME=tycket_db
+      - DB_NAME=ticket_db
       - DB_USER=admin
       - DB_PASSWORD=admin123
-      - DB_HOST=postgres-tyckets
+      - DB_HOST=postgres-tickets
       - DB_PORT=5432
     depends_on:
-      postgres-tyckets:
+      postgres-tickets:
         condition: service_healthy
   
   order-service:
@@ -137,19 +137,19 @@ services:
       timeout: 5s
       retries: 5
 
-  postgres-tyckets:
+  postgres-tickets:
     image: postgres:15
     restart: always
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: tycket_db
+      POSTGRES_DB: ticket_db
     ports:
       - "5426:5432"
     networks:
       - microservices-net
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d tycket_db"]
+      test: ["CMD-SHELL", "pg_isready -U admin -d ticket_db"]
       interval: 10s
       timeout: 5s
       retries: 5

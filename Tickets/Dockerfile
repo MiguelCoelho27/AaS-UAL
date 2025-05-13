@@ -1,17 +1,12 @@
-#Usa uma linguagem base do python
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-#Define o diretorio de trabalho dentro do container
 WORKDIR /app
 
-#Copia os ficheiros necessários para o container
-COPY . /app
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-#Instala as dependencias
-RUN pip install -r requirements.txt
+COPY . .
 
-#Expoe a porta que o microserviço utiliza
-EXPOSE 5002
+EXPOSE 5000
 
-#Comando para iniciar o serviço.
-CMD ["python","app.py"]
+CMD ["python", "app.py"]
