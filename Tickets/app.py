@@ -1,19 +1,19 @@
 from flask import Flask
-from view import tycket_blueprint
+from view import ticket_blueprint
 import psycopg2
 
 # Configuração do banco de dados
 DB_CONFIG = {
-    "dbname": "tycket_db",
+    "dbname": "ticket_db",
     "user": "admin",
     "password": "admin123",
-    "host": "postgres-tyckets",
+    "host": "postgres-tickets",
     "port": 5432,
 }
 
 def initialize_database():
     create_table_query = """
-    CREATE TABLE IF NOT EXISTS tyckets (
+    CREATE TABLE IF NOT EXISTS tickets (
         id SERIAL PRIMARY KEY,
         status VARCHAR(100) NOT NULL,
         id_order INT NOT NULL,
@@ -29,7 +29,7 @@ def initialize_database():
         conn.commit()
         cursor.close()
         conn.close()
-        print("Tabela 'tyckets' inicializada com sucesso.")
+        print("Tabela 'tickets' inicializada com sucesso.")
     except Exception as e:
         print(f"Erro ao inicializar a tabela: {e}")
 
@@ -37,7 +37,7 @@ def initialize_database():
 app = Flask(__name__)
 
 # Registro do blueprint
-app.register_blueprint(tycket_blueprint)
+app.register_blueprint(ticket_blueprint)
 
 if __name__ == '__main__':
     initialize_database()
